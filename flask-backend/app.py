@@ -22,6 +22,8 @@ def upload_image():
     filename = secure_filename(file.filename)
     destination="/".join([target, filename])
     file.save(destination)
+    response="Whatever you wish too return"
+    return response
 
 if __name__ == '__main__':
     app.run(debug=True)

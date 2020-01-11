@@ -1,6 +1,7 @@
 import React from 'react';
 import List from './List';
 import AddListItem from './AddListItem';
+import FileUpload from './FileUpload';
 
 const ShoppingList = ({
   listItems,
@@ -10,6 +11,9 @@ const ShoppingList = ({
 }) => (
   <div className="container">
     <div className="row">
+      <div className="col-sm-12">
+          <FileUpload />
+      </div>
       <div className="col-sm-6">
 
         <List 

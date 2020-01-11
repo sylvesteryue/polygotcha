@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import { createStore, compose } from 'redux';
 import listItems from './reducers/ListItems';
 import ShoppingListContainer from './components/ShoppingListContainer';
+import FileUpload from './components/FileUpload';
 
 import * as serviceWorker from './serviceWorker';
 
