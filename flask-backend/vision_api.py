@@ -4,9 +4,10 @@ import os
 from google.cloud import vision
 from google.cloud.vision import types
 
-client = vision.ImageAnnotatorClient()
+
 
 def label_detect(file):
+    client = vision.ImageAnnotatorClient()
     file_name = os.path.abspath(file)
 
     with io.open(file_name, 'rb') as image_file:

@@ -116,3 +116,6 @@ venv.bak/
 
 #files and file extensions
 test.*
+
+#google api credentials
+polygotcha*.json
