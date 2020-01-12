@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import uuid from 'node-uuid';
-import WORDS from './WORDS'
+import WORDS from './WORDS';
+import List from './List';
+
 
 
 const styleRequired = {
@@ -88,24 +90,39 @@ class AddListItem extends Component {
     } = this.state;
 
     return (
-      <form onSubmit={this.handleUploadImage}>
-        <h3 className="page-header">Level Up Your Vocabulary</h3>
 
-        <div className="form-group">
-          <label htmlFor="imageURL">Take a picture of your selected item! <span style={styleRequired}>*</span></label>
-          <input ref={(ref) => { this.uploadInput = ref; }} type="file" />
-        </div>
+      <div className="col-sm-6">
 
-        <br />
-        <button type="submit" className="btn btn-primary">Check your picture</button>
-        <button type="reset" className="btn btn-link">Cancel</button>
+          <form onSubmit={this.handleUploadImage}>
+            <h3 className="page-header">Level Up Your Vocabulary</h3>
 
-      </form>
+            <div className="form-group">
+              <label htmlFor="imageURL">Take a picture of your selected item! <span style={styleRequired}>*</span></label>
+              <input ref={(ref) => { this.uploadInput = ref; }} type="file" />
+            </div>
+
+            <br />
+            <button type="submit" className="btn btn-primary">Check your picture</button>
+            <button type="reset" className="btn btn-link">Cancel</button>
+
+          </form>
+
+      </div>
+
+      <div className="col-sm-6">
+
+          <List />
+            
+      </div>
+
+
     );
   }
 }
 
 export default AddListItem;
+
+
 
         // <div className="form-group">
         //   <label htmlFor="listItemName">Name <span style={styleRequired}>*</span></label>

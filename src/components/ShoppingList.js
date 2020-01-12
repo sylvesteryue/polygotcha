@@ -51,20 +51,12 @@ class ShoppingList extends Component {
     return (
       <div className="container">
   
-    <div className="row">
-      <div className="col-sm-6">
+        <div className="row">
 
-        <AddListItem />
-      
-
+          <AddListItem />
+          
+        </div>
       </div>
-      <div className="col-sm-6">
-
-        <List />
-        
-      </div>
-    </div>
-  </div>
     )};
 }
 
