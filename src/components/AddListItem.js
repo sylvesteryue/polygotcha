@@ -36,7 +36,7 @@ class AddListItem extends Component {
         mode: 'no-cors',
         method: 'POST',
         body: data,
-      }).then((response) => response["objects_key"].json())
+      }).then((response) => console.log(response))
             .then((data) =>  console.log(data))
             .catch((err)=>   console.log(err))
   }
