@@ -25,6 +25,8 @@ api.add_resource(WordCreator, '/createword')
 api.add_resource(Word, '/word/<string:id>')
 api.add_resource(WordList, '/words')
 
+CORS(app, expose_headers='Authorization')
+
 
 @app.route("/translate", methods=['POST'])
 def get_translated_word():
@@ -37,7 +39,7 @@ def get_translated_word():
 @app.route("/upload", methods=['POST'])
 def upload_image():
     target = os.path.join(UPLOAD_FOLDER)
-
+    #print(request.form['options'])
     if not os.path.isdir(target):
         os.mkdir = target
 
@@ -69,8 +71,20 @@ def check_for_objects(objects):
                     }
                 }, upsert=False)
 
+def set_words_false():
+    col = mongo.db.words
+
+    for word_doc in col.find():
+        mongo.db.words.update_one({
+            '_id': word_doc['_id']
+            },{
+                '$set': {
+                    'correctness': False
+                }
+            }, upsert=False)
+
 
 if __name__ == '__main__':
     mongo.init_app(app)
-    CORS(app, expose_headers='Authorization')
+    set_words_false()
     app.run(debug=True)

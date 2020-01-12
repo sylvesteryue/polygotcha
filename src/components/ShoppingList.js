@@ -54,7 +54,6 @@ class ShoppingList extends Component {
     <div className="row">
       <div className="col-sm-6">
 
-      <p>{WORDS.arr}</p>
         <AddListItem />
       
 

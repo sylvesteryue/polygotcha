@@ -12,6 +12,7 @@ class AddListItem extends Component {
     super();
 
     this.state = {
+      data: "sad days",
       listItemName: '',
       listItemDescription: '',
       listItemQuantity: 0,
@@ -35,9 +36,15 @@ class AddListItem extends Component {
       fetch('http://localhost:5000/upload', {
         method: 'POST',
         body: data,
-      }).then((response) => response.json())
-            .then((data) =>  console.log(data))
-            .catch((err)=>   console.log(err))
+      }).then(results => results.json())
+      .then(data => this.setState({ data })
+    )
+      WORDS.arr = this.state.data
+      console.log(this.state.data)
+  }
+
+  refreshPage(){ 
+    window.location.reload(); 
   }
 
   // handleInputChange(event) {

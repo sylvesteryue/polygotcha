@@ -7,6 +7,7 @@ import { ReactDOM, render } from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 
 // ReactDOM.render(<App />, document.getElementById('root'));
+let dictionary = {objects: "yeet"}
 
 render(
   <App />,

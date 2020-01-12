@@ -7,107 +7,151 @@ import WORDS from "./WORDS";
 
 var OPTIONS = [
         {
-          name: "Apple",
+          name: "apple",
           status: false
         },
         {
-          name: "Orange",
+          name: "orange",
           status: false
         },
         {
-          name: "Banana",
+          name: "banana",
           status: false
         }
       ]
 
-const words = ['Apple', 'Banana']
 
 class List extends Component {
 
   state = {
-    checkboxes: OPTIONS.reduce(
-      (options, option) => ({
-        ...options,
-        [option]: false
-      }),
-      {}
-    )
+    // checkboxes: OPTIONS.reduce(
+    //   (options, option) => ({
+    //     ...options,
+    //     [option]: false
+    //   }),
+    //   {}
+    // )
+    word_data: []
   };
+
+  componentDidMount() {
+    this.fetchWords();
+  }
 
   playerScore = 0;
+  words = WORDS.arr
 
-  selectAllCheckboxes = isSelected => {
-    Object.keys(this.state.checkboxes).forEach(checkbox => {
-      // BONUS: Can you explain why we pass updater function to setState instead of an object?
-      this.setState(prevState => ({
-        checkboxes: {
-          ...prevState.checkboxes,
-          [checkbox]: isSelected
-        }
-      }));
-    });
-  };
-
-  selectAll = () => this.selectAllCheckboxes(true);
-
-  deselectAll = () => this.selectAllCheckboxes(false);
-
-  handleCheckboxChange = changeEvent => {
-    const { name } = changeEvent.target;
-
-    this.setState(prevState => ({
-      checkboxes: {
-        ...prevState.checkboxes,
-        [name]: !prevState.checkboxes[name]
+  calculatePlayerScore(){
+    Object.keys(this.state.word_data).map((word) =>{
+      if(word.correctness == true){
+        this.playerScore += 1;
       }
-    }));
-  };
+    })
+    return this.playerScore
+  }
 
-  handleFormSubmit = formSubmitEvent => {
-    formSubmitEvent.preventDefault();
+  // selectAllCheckboxes = isSelected => {
+  //   Object.keys(this.state.checkboxes).forEach(checkbox => {
+  //     // BONUS: Can you explain why we pass updater function to setState instead of an object?
+  //     this.setState(prevState => ({
+  //       checkboxes: {
+  //         ...prevState.checkboxes,
+  //         [checkbox]: isSelected
+  //       }
+  //     }));
+  //   });
+  // };
 
-    Object.keys(this.state.checkboxes)
-      .filter(checkbox => this.state.checkboxes[checkbox])
-      .forEach(checkbox => {
-        if (WORDS.arr.includes(checkbox)) {
-          this.playerScore += 1
-        } else {
-          this.playerScore -= 1
-        }
-        console.log(checkbox, "is selected.");
-      });
-    this.deselectAll();
-  };
+  // selectAll = () => this.selectAllCheckboxes(true);
+
+  // deselectAll = () => this.selectAllCheckboxes(false);
+
+  // handleCheckboxChange = changeEvent => {
+  //   const { name } = changeEvent.target;
+
+  //   this.setState(prevState => ({
+  //     checkboxes: {
+  //       ...prevState.checkboxes,
+  //       [name]: !prevState.checkboxes[name]
+  //     }
+  //   }));
+  // };
+
+  fetchWords() {
+    // Where we're fetching data from
+    fetch(`http://localhost:5000/words`)
+      // We get the API response and receive data in JSON format...
+      .then(response => response.json())
+      // ...then we update the words state
+      .then(data =>
+        this.setState({
+          word_data: data,
+        })
+      )
+      // Catch any errors we hit and update the app
+      .catch(error => this.setState({ error, isLoading: false }));
+  }
+
+  // handleFormSubmit = formSubmitEvent => {
+  //   formSubmitEvent.preventDefault();
+  //   this.fetchWords();
+
+  //   console.log(this.word_data)
+  //   Object.keys(this.state.checkboxes)
+  //     .filter(checkbox => this.state.checkboxes[checkbox])
+  //     .forEach(checkbox => {
+  //       if (this.word_data.includes(checkbox)) {
+  //         this.playerScore += 1
+  //       } else {
+  //         this.playerScore -= 1
+  //       }
+  //       console.log(checkbox, "is selected.");
+  //     });
+  //   this.deselectAll();
+  // };
 
 
   handlePasswordChange = evt => {
     this.setState({ password: evt.target.value });
   };
 
-  createCheckbox = option => (
-    <Checkbox
-      label={option.name}
-      isSelected={this.state.checkboxes[option.name]}
-      onCheckboxChange={this.handleCheckboxChange}
-      key={option.name}
-      disabled={this.state.checkboxes[option.status]}
-    />
-  );
+  // createCheckbox = word_data => (
+  //   <Checkbox
+  //     label={word_data.word}
+  //     isSelected={this.state.checkboxes[word_data.word]}
+  //     onCheckboxChange={this.handleCheckboxChange}
+  //     key={word_data.word}
+  //     disabled={this.state.checkboxes[word_data.correctness]}
+  //   />
+  // );
 
-  createCheckboxes = () => OPTIONS.map(this.createCheckbox);
+  // createCheckboxes = () => this.word_data.map(this.createCheckbox);
 
   render() {
     return (
       <>
       <h3 className="page-header">Vocabulary List</h3>
-      <h2 className="score">Score is {this.playerScore}</h2>
+      <h2 className="score">Score is {this.calculatePlayerScore()}</h2>
 
       <div className="container">
-
         <div className="row mt-5">
           <div className="col-sm-12">
             <form onSubmit={this.handleFormSubmit}>
-              {this.createCheckboxes()}
+              {/* {this.createCheckboxes()} */}
+              {this.state.word_data.map((individual_word) => (
+                 <div className="form-check">
+                  <label>
+                      <input
+                      type="radio"
+                      name="options"
+                      value={individual_word._id}
+                      checked={true}
+                      className="form-check-input"
+                      disabled={individual_word.correctness}/>
+                        {individual_word.word}
+                    </label>
+                </div>
+              ))}
 
               <div className="form-group mt-2">
                 <button

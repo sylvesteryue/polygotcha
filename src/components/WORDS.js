@@ -1,2 +1,2 @@
-var WORDS = {arr: []}
+var WORDS = {arr: null}
 export default WORDS
