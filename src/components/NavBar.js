@@ -30,14 +30,14 @@ showDropdownMenu(event) {
 
 
 
-  handleClick() {
-    // let clicked=this.state.clicked;
-    //   clicked[n]=!clicked[n]
-    //   this.setState({clicked:clicked});
-    //alert('Hello!');
+  handleClick(e) {
+    console.log(e.target.id);
+    alert(e.target.id);
+    return e.target.id;
     }
 
   render() {
+      var value;
     return (
         <div  className="dropdown" style = {{background:"lightseagreen",width:"200px",borderRadius:"10px",position: "absolute",right: "8%",top: "2%",}} >
          <div className="button" onClick={this.showDropdownMenu}> Languages </div>
@@ -45,24 +45,19 @@ showDropdownMenu(event) {
           { this.state.displayMenu ? (
           <ul>
          <div className="dropdown-item" ref="megaDrop">
-            <li><a className="dropdown-link" href="#Eng" onClick={this.handleClick.bind()}>English</a>
-             {/* <div className={"mega-menu"+" "+this.state.clicked[1]}>
-              <div className="mega-menu-content">
-                <p>First Menu</p>
-              </div>
-            </div> */}
+            <li><a className="dropdown-link" href="#Eng" id='en' onClick={this.handleClick.bind()}>English</a>
             </li>
           </div>
          <div className="dropdown-item" ref="megaDrop">
-            <li><a className="dropdown-link" href="#Chn" onClick={this.handleClick.bind()}>Chinese</a>
+            <li><a className="dropdown-link" href="#Chn" id='zn-CN' onClick={this.handleClick.bind()}>Chinese</a>
             </li>
          </div>
          <div className="dropdown-item" ref="megaDrop">
-            <li><a className="dropdown-link" href="#Jpn" onClick={this.handleClick.bind()}>Japanese</a>
+            <li><a className="dropdown-link" href="#Jpn" id='ja' onClick={this.handleClick.bind()}>Japanese</a>
             </li>
          </div>
          <div className="dropdown-item" ref="megaDrop">
-            <li><a className="dropdown-link" href="#Spn" onClick={this.handleClick.bind()}>Spanish</a>
+            <li><a className="dropdown-link" href="#Spn" id='es' onClick={this.handleClick.bind()}>Spanish</a>
             </li>
          </div>
          {/* <li><a href="#Activity Logs">Activity Logs</a></li>
