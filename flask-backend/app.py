@@ -91,7 +91,7 @@ def check_for_objects(word_option, objects):
                     }
                 }, upsert=False)
 
-def set_words_false():
+def set_words_default():
     col = mongo.db.words
 
     for word_doc in col.find():
@@ -106,5 +106,5 @@ def set_words_false():
 
 if __name__ == '__main__':
     mongo.init_app(app)
-    set_words_false()
+    set_words_default()
     app.run(debug=True)
