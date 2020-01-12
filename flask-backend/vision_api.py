@@ -15,7 +15,7 @@ def object_detect(file):
 
     objects = client.object_localization(image=image).localized_object_annotations
 
-    object_names = [object.name for object in object]
+    object_names = [object.name for object in objects]
 
     print('Objects:')
     for object in objects:
