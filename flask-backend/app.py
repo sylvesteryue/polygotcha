@@ -25,7 +25,7 @@ api.add_resource(WordList, '/words')
 
 @app.route("/translate", methods=['POST'])
 def get_translated_word():
-    word = request.get_json()['word']
+    word = request.get_json()['word_id']
     language = request.get_json()['language']
 
     translated_word = translate_api(word, language)
@@ -48,7 +48,7 @@ def upload_image():
 
     os.remove(destination)
 
-    return {"objects_in_image": objects}
+    return json.dumps({"objects_in_image": objects})
 
 if __name__ == '__main__':
     from db import mongo

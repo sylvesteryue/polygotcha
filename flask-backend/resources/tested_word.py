@@ -26,7 +26,7 @@ class WordCreator(Resource):
                 "word": data['word'],
                 "correctness": data['correctness']
             }).inserted_id
-            word_created = mongo.db.words.find_one({"id": word_id})
+            word_created = mongo.db.words.find_one({"_id": word_id})
         except:
             return {'message': 'An error occured inserting the word'}, 500
         
@@ -34,10 +34,27 @@ class WordCreator(Resource):
 
 class Word(Resource):
     def get(self, id):
-        word = mongo.db.words.find_one({"id": ObjectId(id)})
+        word = mongo.db.words.find_one({"_id": ObjectId(id)})
         if word:
             return json_util._json_convert(word), 200
+
         return {'message': 'Word not found'}, 404
+    
+    def delete(self, id):
+        try:
+            word = mongo.db.words.find_one({"_id": ObjectId(id)})
+        except:
+            return {'message': 'An error occured trying to look up this word'}, 500
+
+        if word:
+            try:
+                mongo.db.words.delete_one({"_id": ObjectId(id)})
+            except:
+                return {'message': 'An error occured trying to delete this word'}, 500
+            return {'message': 'word was deleted'}, 200
+
+        return {'message': 'word not found'}, 404
+
 
 class WordList(Resource):
     parser = reqparse.RequestParser()
