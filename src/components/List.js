@@ -43,6 +43,7 @@ class List extends Component {
   words = WORDS.arr
 
   calculatePlayerScore(){
+    this.playerScore = 0;
     this.state.word_data.map((word) =>{
       if(word.correctness == true){
         this.playerScore += 1;
@@ -168,7 +169,7 @@ class List extends Component {
                       className="form-check-input"
                       // onChange={this.handleOptionChange}
                       disabled={individual_word.correctness}/>
-                        {individual_word.word}
+                        {individual_word.translation}
                     </label>
                 </div>
               ))}

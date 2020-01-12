@@ -7,6 +7,7 @@ constructor(){
 
  this.state = {
        displayMenu: false,
+       language: 'en'
      };
 
   this.showDropdownMenu = this.showDropdownMenu.bind(this);
@@ -31,10 +32,19 @@ showDropdownMenu(event) {
 
 
   handleClick(e) {
-    console.log(e.target.id);
-    alert(e.target.id);
-    return e.target.id;
-    }
+    //this.setState({language: e.target.id});
+
+    const data = new FormData();
+
+    data.append('option', e.target.id)
+
+    fetch('http://localhost:5000/translate', {
+        method: 'POST',
+        body: data,
+      }).then(results => results.json())
+      .then(data => this.setState({ data })
+      )
+  }
 
   render() {
       var value;
