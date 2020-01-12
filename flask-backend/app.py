@@ -39,8 +39,8 @@ def upload_image():
     objects = vision_api.object_detect(destination)
 
     os.remove(destination)
-
-    return {"objects_in_image": objects}
+    print(objects)
+    return {"objects_key": objects}
 
 if __name__ == '__main__':
     app.run(debug=True)

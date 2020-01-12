@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import uuid from 'node-uuid';
+import WORDS from './WORDS'
+
 
 const styleRequired = {
   color: '#ffaaaa'
 };
 
 class AddListItem extends Component {
-  constructor() {
+  constructor(props) {
     super();
 
     this.state = {
@@ -16,10 +18,12 @@ class AddListItem extends Component {
       imageURL: ''
     };
 
-    this.handleInputChange = this.handleInputChange.bind(this);
+    // this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmitEvent = this.handleSubmitEvent.bind(this);
 
     this.handleUploadImage = this.handleUploadImage.bind(this);
+
+    this.wordsArray = [];
   }
 
   handleUploadImage(ev) {
@@ -29,28 +33,25 @@ class AddListItem extends Component {
       data.append('file', this.uploadInput.files[0]);
 
       fetch('http://localhost:5000/upload', {
+        mode: 'no-cors',
         method: 'POST',
         body: data,
-      }).then((response) => {
-        response.json().then((body) => {
-          this.setState({ imageURL: `http://localhost:5000/${body.file}` });
-        });
-      });
-
-    
+      }).then((response) => response["objects_key"].json())
+            .then((data) =>  console.log(data))
+            .catch((err)=>   console.log(err))
   }
 
-  handleInputChange(event) {
-    const inputName = event.target.name;
-    const inputValue = event.target.value;
+  // handleInputChange(event) {
+  //   const inputName = event.target.name;
+  //   const inputValue = event.target.value;
 
-    this.setState(currentState => {
-      return {
-        ...currentState,
-        [inputName]: inputValue
-      };
-    });
-  }
+  //   this.setState(currentState => {
+  //     return {
+  //       ...currentState,
+  //       [inputName]: inputValue
+  //     };
+  //   });
+  // }
 
   handleSubmitEvent(event) {
     event.preventDefault();
