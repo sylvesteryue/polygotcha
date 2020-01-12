@@ -31,7 +31,7 @@ class ListHeader extends Component {
       );
     }
 
-    return (<span>Shopping List</span>);
+    return (<span>Vocabulary List</span>);
   }
 }
 

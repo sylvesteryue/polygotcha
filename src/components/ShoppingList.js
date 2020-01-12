@@ -1,7 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import List from './List';
 import AddListItem from './AddListItem';
-import FileUpload from './FileUpload';
+import FileUpload from './FileUpload'; 
+import { Button, ButtonToolbar, Modal } from 'react-bootstrap';
+
+// function UploadModal() {
+//   const [show, setShow] = useState(false);
+
+//   const handleClose = () => setShow(false);
+//   const handleShow = () => setShow(true);
+
+//   return (
+//     <>
+//       <Button variant="primary" onClick={handleShow}>
+//         Launch demo modal
+//       </Button>
+
+//       <Modal show={show} onHide={handleClose}>
+//         <Modal.Header closeButton>
+//           <Modal.Title>Modal heading</Modal.Title>
+//         </Modal.Header>
+//         <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+//         <Modal.Footer>
+//           <Button variant="secondary" onClick={handleClose}>
+//             Close
+//           </Button>
+//           <Button variant="primary" onClick={handleClose}>
+//             Save Changes
+//           </Button>
+//         </Modal.Footer>
+//       </Modal>
+//     </>
+//   );
+// }
 
 const ShoppingList = ({
   listItems,
@@ -9,10 +40,14 @@ const ShoppingList = ({
   removeListItem,
   removeAllListItems
 }) => (
+// <UploadModal />
   <div className="container">
+  
     <div className="row">
-      <div className="col-sm-12">
-          <FileUpload />
+      <div className="col-sm-6">
+
+        <AddListItem addListItem={addListItem} />
+
       </div>
       <div className="col-sm-6">
 
@@ -21,15 +56,11 @@ const ShoppingList = ({
           removeListItem={removeListItem} 
           removeAllListItems={removeAllListItems}
         />
-
-      </div>
-      <div className="col-sm-6">
-
-        <AddListItem addListItem={addListItem} />
+        
       
       </div>
     </div>
   </div>
-);
+  );
 
 export default ShoppingList;

@@ -3,23 +3,13 @@ import './index.css';
 import App from './App';
 
 import { ReactDOM, render } from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore, compose } from 'redux';
-import listItems from './reducers/ListItems';
-import ShoppingListContainer from './components/ShoppingListContainer';
-import FileUpload from './components/FileUpload';
 
 import * as serviceWorker from './serviceWorker';
-
-
-const store = createStore(listItems, compose(window.devToolsExtension ? window.devToolsExtension() : f => f));
 
 // ReactDOM.render(<App />, document.getElementById('root'));
 
 render(
-  <Provider store={store}>
-    <ShoppingListContainer />
-  </Provider>,
+  <App />,
   document.querySelector('[data-react-application]')
 );
 

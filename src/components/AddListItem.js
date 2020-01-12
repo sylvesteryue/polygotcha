@@ -12,11 +12,33 @@ class AddListItem extends Component {
     this.state = {
       listItemName: '',
       listItemDescription: '',
-      listItemQuantity: 0
+      listItemQuantity: 0,
+      imageURL: ''
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmitEvent = this.handleSubmitEvent.bind(this);
+
+    this.handleUploadImage = this.handleUploadImage.bind(this);
+  }
+
+  handleUploadImage(ev) {
+      ev.preventDefault();
+
+      const data = new FormData();
+      data.append('file', this.uploadInput.files[0]);
+      data.append('filename', this.fileName.value);
+
+      fetch('http://localhost:5000/upload', {
+        method: 'POST',
+        body: data,
+      }).then((response) => {
+        response.json().then((body) => {
+          this.setState({ imageURL: `http://localhost:5000/${body.file}` });
+        });
+      });
+
+    
   }
 
   handleInputChange(event) {
@@ -60,62 +82,67 @@ class AddListItem extends Component {
     } = this.state;
 
     return (
-      <form onSubmit={this.handleSubmitEvent}>
-        <h3 className="page-header">Add New Item</h3>
+      <form onSubmit={this.handleUploadImage}>
+        <h3 className="page-header">Level Up Your Vocabulary</h3>
 
         <div className="form-group">
-          <label htmlFor="listItemName">Name <span style={styleRequired}>*</span></label>
-          <input 
-            type="text"
-            className="form-control"
-            id="listItemName"
-            name="listItemName"
-            placeholder="Enter name"
-            required
-            value={listItemName}
-            onChange={this.handleInputChange} />
+          <label htmlFor="imageURL">Take a picture of your selected item! <span style={styleRequired}>*</span></label>
+          <input ref={(ref) => { this.uploadInput = ref; }} type="file" />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="listItemDescription">Description</label>
-          <textarea
-            className="form-control"
-            rows="3"
-            id="listItemDescription"
-            name="listItemDescription"
-            placeholder="Enter description"
-            ref="description"
-            value={listItemDescription}
-            onChange={this.handleInputChange}
-          ></textarea>
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="listItemQuantity">Quantity <span style={styleRequired}>*</span></label>
-          <div className="row">
-            <div className="col-xs-5 col-sm-6 col-md-4">
-              <input
-                type="number"
-                min="1"
-                max="9999"
-                step="1"
-                className="form-control"
-                id="listItemQuantity"
-                name="listItemQuantity"
-                required
-                value={listItemQuantity}
-                onChange={this.handleInputChange} />
-            </div>
-          </div>
-        </div>
-
-        <hr />
-
-        <button type="submit" className="btn btn-primary">Add to list</button>
+        <br />
+        <button type="submit" className="btn btn-primary">Check your picture</button>
         <button type="reset" className="btn btn-link">Cancel</button>
+
       </form>
     );
   }
 }
 
 export default AddListItem;
+
+        // <div className="form-group">
+        //   <label htmlFor="listItemName">Name <span style={styleRequired}>*</span></label>
+        //   <input 
+        //     type="text"
+        //     className="form-control"
+        //     id="listItemName"
+        //     name="listItemName"
+        //     placeholder="Enter name"
+        //     required
+        //     value={listItemName}
+        //     onChange={this.handleInputChange} />
+        // </div>
+
+        // <div className="form-group">
+        //   <label htmlFor="listItemDescription">Description</label>
+        //   <textarea
+        //     className="form-control"
+        //     rows="3"
+        //     id="listItemDescription"
+        //     name="listItemDescription"
+        //     placeholder="Enter description"
+        //     ref="description"
+        //     value={listItemDescription}
+        //     onChange={this.handleInputChange}
+        //   ></textarea>
+        // </div>
+
+        // <div className="form-group">
+        //   <label htmlFor="listItemQuantity">Quantity <span style={styleRequired}>*</span></label>
+        //   <div className="row">
+        //     <div className="col-xs-5 col-sm-6 col-md-4">
+        //       <input
+        //         type="number"
+        //         min="1"
+        //         max="9999"
+        //         step="1"
+        //         className="form-control"
+        //         id="listItemQuantity"
+        //         name="listItemQuantity"
+        //         required
+        //         value={listItemQuantity}
+        //         onChange={this.handleInputChange} />
+        //     </div>
+        //   </div>
+        // </div>
