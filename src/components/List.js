@@ -39,8 +39,8 @@ class List extends Component {
     this.fetchWords();
   }
 
+
   playerScore = 0;
-  words = WORDS.arr
 
   calculatePlayerScore(){
     this.playerScore = 0;
@@ -94,10 +94,15 @@ class List extends Component {
       .catch(error => this.setState({ error, isLoading: false }));
   }
 
+  refreshPage() {
+    window.location.reload(true);
+  }
+
   handleFormSubmit = formSubmitEvent => {
     formSubmitEvent.preventDefault();
     this.fetchWords();
     this.sendData();
+    this.refreshPage()
   };
 
   //   console.log(this.word_data)
@@ -151,7 +156,7 @@ class List extends Component {
       <>
       <h3 className="page-header">Vocabulary List</h3>
       <h2 className="score">Score is {this.calculatePlayerScore()}</h2>
-
+      {this.fetchWords()}
       <div className="container">
         <div className="row mt-5">
           <div className="col-sm-12">

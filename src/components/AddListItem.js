@@ -19,7 +19,8 @@ class AddListItem extends Component {
       listItemDescription: '',
       listItemQuantity: 0,
       imageURL: '',
-      word_option: ''
+      word_option: '',
+      word_data: []
     };
 
     // this.handleInputChange = this.handleInputChange.bind(this);
@@ -43,12 +44,14 @@ class AddListItem extends Component {
       }).then(results => results.json())
       .then(data => this.setState({ data })
     )
-      WORDS.arr = this.state.data
-      console.log(this.state.data)
+      // WORDS.arr = this.state.data
+      // console.log(this.state.data)
+      // this.fetchWords();
+      this.refreshPage();
   }
 
-  refreshPage(){ 
-    window.location.reload(); 
+  refreshPage() {
+    window.location.reload(false);
   }
 
   // handleInputChange(event) {
@@ -61,6 +64,21 @@ class AddListItem extends Component {
   //       [inputName]: inputValue
   //     };
   //   });
+  // }
+
+  // fetchWords() {
+  //   // Where we're fetching data from
+  //   fetch(`http://localhost:5000/words`)
+  //     // We get the API response and receive data in JSON format...
+  //     .then(response => response.json())
+  //     // ...then we update the words state
+  //     .then(data =>
+  //       this.setState({
+  //         word_data: data,
+  //       })
+  //     )
+  //     // Catch any errors we hit and update the app
+  //     .catch(error => this.setState({ error, isLoading: false }));
   // }
 
   handleSubmitEvent(event) {
@@ -117,6 +135,7 @@ class AddListItem extends Component {
 
         <div className="col-sm-6">
             <List parentCallback = {this.callbackFunction}/>
+            {/* <List word_data = {this.state.word_data}></List> */}
         </div>
       </>
 

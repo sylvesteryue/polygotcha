@@ -29,10 +29,12 @@ showDropdownMenu(event) {
 
   }
 
+  refreshPage() {
+    window.location.reload(true);
+  }
 
 
   handleClick(e) {
-    //this.setState({language: e.target.id});
 
     const data = new FormData();
 
@@ -45,6 +47,8 @@ showDropdownMenu(event) {
       .then(data => this.setState({ data })
       )
   }
+
+  
 
   render() {
       var value;
@@ -59,7 +63,7 @@ showDropdownMenu(event) {
             </li>
           </div>
          <div className="dropdown-item" ref="megaDrop">
-            <li><a className="dropdown-link" href="#Chn" id='zn-CN' onClick={this.handleClick.bind()}>Chinese</a>
+            <li><a className="dropdown-link" href="#Chn" id='zn' onClick={this.handleClick.bind()}>Chinese</a>
             </li>
          </div>
          <div className="dropdown-item" ref="megaDrop">
