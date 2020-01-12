@@ -1,19 +1,27 @@
 import os
 from flask import Flask, jsonify, request, json
+from flask_restful import Api
 from flask_pymongo import PyMongo
 from werkzeug.utils import secure_filename
 
 import vision_api
 import translate_api
 
+from resources.tested_word import WordCreator, Word, WordList
+
 UPLOAD_FOLDER = os.getcwd() + '/uploads'
 
 app = Flask(__name__)
+app.config['MONGO_URI'] = 'mongodb://localhost:27017/polygotcha'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-@app.route("/")
-def home():
-    pass
+
+api = Api(app)
+
+api.add_resource(WordCreator, '/createword')
+api.add_resource(Word, '/word/<string:id>')
+api.add_resource(WordList, '/words')
+
 
 @app.route("/translate", methods=['POST'])
 def get_translated_word():
@@ -43,4 +51,6 @@ def upload_image():
     return {"objects_in_image": objects}
 
 if __name__ == '__main__':
+    from db import mongo
+    mongo.init_app(app)
     app.run(debug=True)
