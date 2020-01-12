@@ -13,6 +13,11 @@ class WordCreator(Resource):
                         required=True,
                         help="word cannot be left blank!")
 
+    # parser.add_argument('translation',
+    #                     type=str,
+    #                     required=True,
+    #                     help="translation cannot be left blank!")
+
     parser.add_argument('correctness',
                         type=bool,
                         required=True,
@@ -24,6 +29,7 @@ class WordCreator(Resource):
         try:
             word_id = mongo.db.words.insert_one({
                 "word": data['word'],
+                "translation": data['word'],
                 "correctness": data['correctness']
             }).inserted_id
             word_created = mongo.db.words.find_one({"_id": word_id})
@@ -81,6 +87,7 @@ class WordList(Resource):
             for word in data['words']:
                 word_id = mongo.db.words.insert_one({
                 "word": data['word'],
+                "translation": data['word'],
                 "correctness": data['correctness']
                 }).inserted_id
                 word_created = mongo.db.words.find_one(

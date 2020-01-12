@@ -31,11 +31,23 @@ CORS(app, expose_headers='Authorization')
 
 
 @app.route("/translate", methods=['POST'])
-def get_translated_words():
-    word = request.get_json()['word_id']
-    language = request.get_json()['language']
+def translate():
+    language_code = str(request.form['option'])
 
-    translated_word = translate_api(word, language)
+    print(language_code)
+
+    col = mongo.db.words
+    for word_doc in col.find():
+         mongo.db.words.update_one({
+            '_id': word_doc['_id']
+            },{
+                '$set': {
+                    'translation': translate_api.translate(word_doc['word'], language_code)
+                }
+            }, upsert=False)
+
+
+    return language_code
 
 
 
