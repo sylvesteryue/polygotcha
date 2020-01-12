@@ -43,12 +43,12 @@ class List extends Component {
   words = WORDS.arr
 
   calculatePlayerScore(){
-    Object.keys(this.state.word_data).map((word) =>{
+    this.state.word_data.map((word) =>{
       if(word.correctness == true){
         this.playerScore += 1;
       }
     })
-    return this.playerScore
+    return this.playerScore;
   }
 
   // selectAllCheckboxes = isSelected => {

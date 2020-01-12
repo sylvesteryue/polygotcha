@@ -9,5 +9,5 @@ def translate(word, target):
     print(result['translatedText'])
 
 if __name__ == '__main__':
-    translate('hi', 'es')
+    translate('hi', 'zh-CN')
 
