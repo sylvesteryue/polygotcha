@@ -4,6 +4,8 @@ from flask_restful import Api
 from flask_pymongo import PyMongo
 from werkzeug.utils import secure_filename
 
+from db import mongo
+
 import vision_api
 import translate_api
 
@@ -48,9 +50,25 @@ def upload_image():
 
     os.remove(destination)
 
-    return json.dumps({"objects_in_image": objects})
+    check_for_objects(objects)
+
+    return "Success"
+
+
+def check_for_objects(objects):
+    col = mongo.db.words
+
+    for word_doc in col.find():
+        if word_doc['word'] in objects:
+            mongo.db.words.update_one({
+                '_id': word_doc['_id']
+                },{
+                    '$set': {
+                        'correctness': True
+                    }
+                }, upsert=False)
+
 
 if __name__ == '__main__':
-    from db import mongo
     mongo.init_app(app)
     app.run(debug=True)
