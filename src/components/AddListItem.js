@@ -27,7 +27,6 @@ class AddListItem extends Component {
 
       const data = new FormData();
       data.append('file', this.uploadInput.files[0]);
-      data.append('filename', this.fileName.value);
 
       fetch('http://localhost:5000/upload', {
         method: 'POST',

@@ -4,8 +4,22 @@ import ListHeader from './ListHeader';
 import EmptyList from './EmptyList';
 import Checkbox from "./Checkbox";
 
+var OPTIONS = [
+        {
+          name: "Apple",
+          status: false
+        },
+        {
+          name: "Orange",
+          status: false
+        },
+        {
+          name: "Banana",
+          status: false
+        }
+      ]
 
-const OPTIONS = ["Apple", "Orange", "Banana"];
+const words = ['Apple', 'Banana']
 
 class List extends Component {
 
@@ -18,6 +32,8 @@ class List extends Component {
       {}
     )
   };
+
+  playerScore = 0;
 
   selectAllCheckboxes = isSelected => {
     Object.keys(this.state.checkboxes).forEach(checkbox => {
@@ -52,16 +68,28 @@ class List extends Component {
     Object.keys(this.state.checkboxes)
       .filter(checkbox => this.state.checkboxes[checkbox])
       .forEach(checkbox => {
+        if (words.includes(checkbox)) {
+          this.playerScore += 1
+        } else {
+          this.playerScore -= 1
+        }
         console.log(checkbox, "is selected.");
       });
+    this.deselectAll();
+  };
+
+
+  handlePasswordChange = evt => {
+    this.setState({ password: evt.target.value });
   };
 
   createCheckbox = option => (
     <Checkbox
-      label={option}
-      isSelected={this.state.checkboxes[option]}
+      label={option.name}
+      isSelected={this.state.checkboxes[option.name]}
       onCheckboxChange={this.handleCheckboxChange}
-      key={option}
+      key={option.name}
+      disabled={this.state.checkboxes[option.status]}
     />
   );
 
@@ -71,8 +99,10 @@ class List extends Component {
     return (
       <>
       <h3 className="page-header">Vocabulary List</h3>
+      <h2 className="score">Score is {this.playerScore}</h2>
 
       <div className="container">
+
         <div className="row mt-5">
           <div className="col-sm-12">
             <form onSubmit={this.handleFormSubmit}>
