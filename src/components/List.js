@@ -31,7 +31,8 @@ class List extends Component {
     //   }),
     //   {}
     // )
-    word_data: []
+    word_data: [],
+    selectedOption: ""
   };
 
   componentDidMount() {
@@ -92,9 +93,11 @@ class List extends Component {
       .catch(error => this.setState({ error, isLoading: false }));
   }
 
-  // handleFormSubmit = formSubmitEvent => {
-  //   formSubmitEvent.preventDefault();
-  //   this.fetchWords();
+  handleFormSubmit = formSubmitEvent => {
+    formSubmitEvent.preventDefault();
+    this.fetchWords();
+    this.sendData();
+  };
 
   //   console.log(this.word_data)
   //   Object.keys(this.state.checkboxes)
@@ -114,6 +117,21 @@ class List extends Component {
   handlePasswordChange = evt => {
     this.setState({ password: evt.target.value });
   };
+
+  handleOptionChange = changeEvent => {
+    this.setState({
+      selectedOption: changeEvent.target.value
+    });
+  };
+
+  setOption(event) {
+    this.selectedOption = event.target.value;
+    this.sendData()
+  }
+
+  sendData = () => {
+    this.props.parentCallback(this.selectedOption);
+}   
 
   // createCheckbox = word_data => (
   //   <Checkbox
@@ -138,20 +156,23 @@ class List extends Component {
           <div className="col-sm-12">
             <form onSubmit={this.handleFormSubmit}>
               {/* {this.createCheckboxes()} */}
+              <div onChange={this.setOption.bind(this)}>
               {this.state.word_data.map((individual_word) => (
                  <div className="form-check">
                   <label>
                       <input
                       type="radio"
                       name="options"
-                      value={individual_word._id}
-                      checked={true}
+                      value={individual_word._id.$oid}
+                      //checked={true}
                       className="form-check-input"
+                      // onChange={this.handleOptionChange}
                       disabled={individual_word.correctness}/>
                         {individual_word.word}
                     </label>
                 </div>
               ))}
+              </div>
 
               <div className="form-group mt-2">
                 <button

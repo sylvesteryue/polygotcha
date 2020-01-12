@@ -18,7 +18,8 @@ class AddListItem extends Component {
       listItemName: '',
       listItemDescription: '',
       listItemQuantity: 0,
-      imageURL: ''
+      imageURL: '',
+      word_option: ''
     };
 
     // this.handleInputChange = this.handleInputChange.bind(this);
@@ -34,7 +35,8 @@ class AddListItem extends Component {
 
       const data = new FormData();
       data.append('file', this.uploadInput.files[0]);
-
+      data.append('option', this.state.word_option)
+      
       fetch('http://localhost:5000/upload', {
         method: 'POST',
         body: data,
@@ -82,6 +84,10 @@ class AddListItem extends Component {
     addListItem(listItem);
   }
 
+  callbackFunction = (childData) => {
+    this.setState({word_option: childData})
+  }
+
   render() {
     const {
       listItemName,
@@ -90,30 +96,29 @@ class AddListItem extends Component {
     } = this.state;
 
     return (
+        <>
+        <div className="col-sm-6">
 
-      <div className="col-sm-6">
+            <form onSubmit={this.handleUploadImage}>
+              <h3 className="page-header">Level Up Your Vocabulary</h3>
 
-          <form onSubmit={this.handleUploadImage}>
-            <h3 className="page-header">Level Up Your Vocabulary</h3>
+              <div className="form-group">
+                <label htmlFor="imageURL">Take a picture of your selected item! <span style={styleRequired}>*</span></label>
+                <input ref={(ref) => { this.uploadInput = ref; }} type="file" />
+              </div>
 
-            <div className="form-group">
-              <label htmlFor="imageURL">Take a picture of your selected item! <span style={styleRequired}>*</span></label>
-              <input ref={(ref) => { this.uploadInput = ref; }} type="file" />
-            </div>
+              <br />
+              <button type="submit" className="btn btn-primary">Check your picture</button>
+              <button type="reset" className="btn btn-link">Cancel</button>
 
-            <br />
-            <button type="submit" className="btn btn-primary">Check your picture</button>
-            <button type="reset" className="btn btn-link">Cancel</button>
+            </form>
 
-          </form>
+        </div>
 
-      </div>
-
-      <div className="col-sm-6">
-
-          <List />
-            
-      </div>
+        <div className="col-sm-6">
+            <List parentCallback = {this.callbackFunction}/>
+        </div>
+      </>
 
 
     );

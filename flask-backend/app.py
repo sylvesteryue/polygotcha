@@ -5,6 +5,8 @@ from flask_pymongo import PyMongo
 from werkzeug.utils import secure_filename
 from flask_cors import CORS, cross_origin
 
+from bson.objectid import ObjectId
+
 from db import mongo
 
 import vision_api
@@ -29,11 +31,13 @@ CORS(app, expose_headers='Authorization')
 
 
 @app.route("/translate", methods=['POST'])
-def get_translated_word():
+def get_translated_words():
     word = request.get_json()['word_id']
     language = request.get_json()['language']
 
     translated_word = translate_api(word, language)
+
+
 
 
 @app.route("/upload", methods=['POST'])
@@ -45,6 +49,10 @@ def upload_image():
 
     file = request.files['file']
 
+    word_option = request.form['option']
+
+    print(word_option)
+
     filename = secure_filename(file.filename)
 
     destination = "/".join([target, filename])
@@ -53,16 +61,16 @@ def upload_image():
 
     os.remove(destination)
 
-    check_for_objects(objects)
+    check_for_objects(word_option, objects)
 
     return {"objects": objects}
 
 
-def check_for_objects(objects):
+def check_for_objects(word_option, objects):
     col = mongo.db.words
 
     for word_doc in col.find():
-        if word_doc['word'] in objects:
+        if word_doc['_id'] == ObjectId(word_option) and word_doc['word'] in objects:
             mongo.db.words.update_one({
                 '_id': word_doc['_id']
                 },{
