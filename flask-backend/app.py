@@ -3,6 +3,7 @@ from flask import Flask, jsonify, request, json
 from flask_restful import Api
 from flask_pymongo import PyMongo
 from werkzeug.utils import secure_filename
+from flask_cors import CORS, cross_origin
 
 from db import mongo
 
@@ -52,7 +53,7 @@ def upload_image():
 
     check_for_objects(objects)
 
-    return "Success"
+    return {"objects": objects}
 
 
 def check_for_objects(objects):
@@ -71,4 +72,5 @@ def check_for_objects(objects):
 
 if __name__ == '__main__':
     mongo.init_app(app)
+    CORS(app, expose_headers='Authorization')
     app.run(debug=True)

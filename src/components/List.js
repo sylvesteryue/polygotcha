@@ -3,6 +3,7 @@ import ListItem from './ListItem';
 import ListHeader from './ListHeader';
 import EmptyList from './EmptyList';
 import Checkbox from "./Checkbox";
+import WORDS from "./WORDS";
 
 var OPTIONS = [
         {
@@ -68,7 +69,7 @@ class List extends Component {
     Object.keys(this.state.checkboxes)
       .filter(checkbox => this.state.checkboxes[checkbox])
       .forEach(checkbox => {
-        if (words.includes(checkbox)) {
+        if (WORDS.arr.includes(checkbox)) {
           this.playerScore += 1
         } else {
           this.playerScore -= 1

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { Component, useState } from 'react';
 import List from './List';
 import AddListItem from './AddListItem';
 import FileUpload from './FileUpload'; 
 import { Button, ButtonToolbar, Modal } from 'react-bootstrap';
+import WORDS from './WORDS'
 
 // function UploadModal() {
 //   const [show, setShow] = useState(false);
@@ -33,34 +34,69 @@ import { Button, ButtonToolbar, Modal } from 'react-bootstrap';
 //     </>
 //   );
 // }
+class ShoppingList extends Component {
+  constructor () {
+    super();
+    // this.handleInputChange = this.handleInputChange.bind(this);
+  }
+  state = {
+    words: [""], // setting initial value of our name state
+  }
+  // handleInputChange(items) {
+  //   // event.preventDefault();
+  //   this.setState({ words=words.extends(items)})
+  // }
 
-const ShoppingList = ({
-  listItems,
-  addListItem,
-  removeListItem,
-  removeAllListItems
-}) => (
-// <UploadModal />
-  <div className="container">
+  render() {
+    return (
+      <div className="container">
   
     <div className="row">
       <div className="col-sm-6">
 
-        <AddListItem addListItem={addListItem} />
+      <p>{WORDS.arr}</p>
+        <AddListItem />
+      
 
       </div>
       <div className="col-sm-6">
 
-        <List 
-          listItems={listItems} 
-          removeListItem={removeListItem} 
-          removeAllListItems={removeAllListItems}
-        />
+        <List />
         
-      
       </div>
     </div>
   </div>
-  );
+    )};
+}
+
+// const ShoppingList = ({
+//   listItems,
+//   addListItem,
+//   removeListItem,
+//   removeAllListItems
+// }) => (
+// // <UploadModal />
+//   <div className="container">
+  
+//     <div className="row">
+//       <div className="col-sm-6">
+
+//         <AddListItem />
+
+//       </div>
+//       <div className="col-sm-6">
+
+//         <List 
+//           listItems={listItems} 
+//           removeListItem={removeListItem} 
+//           removeAllListItems={removeAllListItems}
+//         />
+        
+      
+//       </div>
+//     </div>
+//   </div>
+//   );
 
 export default ShoppingList;
+
