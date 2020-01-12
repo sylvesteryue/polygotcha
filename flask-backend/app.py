@@ -73,16 +73,16 @@ def upload_image():
 
     os.remove(destination)
 
-    check_for_objects(word_option, objects)
-
-    return {"objects": objects}
+    return json.dumps(check_for_objects(word_option, objects))
 
 
 def check_for_objects(word_option, objects):
     col = mongo.db.words
+    success = False
 
     for word_doc in col.find():
         if word_doc['_id'] == ObjectId(word_option) and word_doc['word'] in objects:
+            success = True
             mongo.db.words.update_one({
                 '_id': word_doc['_id']
                 },{
@@ -90,6 +90,9 @@ def check_for_objects(word_option, objects):
                         'correctness': True
                     }
                 }, upsert=False)
+    
+    return success
+    
 
 def set_words_default():
     col = mongo.db.words
